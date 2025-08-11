@@ -1,29 +1,46 @@
-# Partner-Bot-V14
-All Copyright By SmSm
+# Discord Role Manager Bot (Slash Commands)
 
-<img src = "https://discord.c99.nl/widget/theme-2/349942964904001546.png"></div>
+Secure Discord bot that assigns and removes roles using slash commands. No message content intent required.
 
-- Best Advertising Bot to Share Servers
+## URGENT: Rotate your leaked token
+If you previously embedded your token in code or shared it, reset it now:
+- Discord Developer Portal → Your App → Bot → Reset Token
+- Update your environment with the new token
 
+## Prerequisites
+- Python 3.9+
+- A Discord application with a bot user
+- Invite the bot with scopes: `bot` and `applications.commands`
+- Grant the bot permission: `Manage Roles`
 
+## Setup
+1. Copy `.env.example` to `.env` and set your token:
+   ```
+   DISCORD_TOKEN=your-token-here
+   ```
+2. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. Run the bot:
+   ```bash
+   python bot.py
+   ```
 
-# Features 
-- Bot Will Just Advertising Link Servers.
-- Bot Work With Out Admin Permission.
-- Bot Reply Users in any Chat If They Asked For Advertising.
+## Commands
+- `/assignrole user:@User role:@Role` — Assigns a role to a member
+- `/removerole user:@User role:@Role` — Removes a role from a member
 
-# Tutorial
-- First Create Application On [Developer Portal](https://discord.com/developers)
-- Allow All Intents And Click Reset Token and Add it To Your Project
-- And in ``config.json`` file **partner** for ID Channel Advertising and **link** your Link server and **idvc** ID voice Channel
+Both commands enforce:
+- Caller must have `Manage Roles`
+- Bot must have `Manage Roles`
+- Role hierarchy checks (both caller and bot must have a higher top role than the target role)
+- Managed roles (integrations/@everyone) are not assignable
 
+## Intents
+This bot uses only default intents and does not require the Message Content intent. Server Members intent is not required for these slash commands because Discord provides resolved member data with interactions.
 
-# Run on
-[![Remix on Glitch](https://cdn.glitch.com/2703baf2-b643-4da7-ab91-7ee2a2d00b5b%2Fremix-button.svg)](https://glitch.com/edit/#!/import/github/https://github.com/DEVSMSM/Partner-Bot-V14/https://github.com/DEVSMSM/Partner-Bot-V14)
-[![Run on Replit](https://replit.com/badge/github/DEVSMSM/Partner-Bot-V14)](https://replit.com/new/github/DEVSMSM/Partner-Bot-V14)
-
-
-- Dont Forget Give 🌟 Project And Thank You All
-
-
-- [Link](https://discord.gg/yjsCnwdfGK) My Discord Join For More Sources
+## Troubleshooting
+- If commands don't appear: wait up to a minute after startup or re-invite with `applications.commands` scope. The bot syncs commands on ready.
+- If you see hierarchy errors: move the bot's top role above the role you want it to manage.
+- If you see forbidden errors: ensure the bot has the `Manage Roles` permission in the server and channel.
